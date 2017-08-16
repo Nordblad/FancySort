@@ -3,12 +3,13 @@ import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import ItemWrapper from './ItemWrapper'
+import ReglineItem from './ReglineItem'
 
 export namespace ReglineItemList {
     export interface Props {
-        pageNo: number,
-        items?: number[]
+        pageNo?: number,
+        parentId?: number,
+        childItemIds?: number[]
     }
 
     export interface State {
@@ -20,11 +21,13 @@ export namespace ReglineItemList {
 export default class ReglineItemList extends React.Component<ReglineItemList.Props, ReglineItemList.State> {
 
     render() {
-        const { items, pageNo } = this.props;
+        const { childItemIds, pageNo, parentId } = this.props;
+        // Redan här måste itemType fås fram för wrapper-inställningar
         return (
-            <div className="ReglineItemList">
-                This is a list of regline items with pageNo {pageNo}.
-                 {items && items.map(i => (<ItemWrapper key={i} id={i} />))}
+            <div className="ReglineItemList" style={{ padding: 0, boxShadow: '0 0 0 1px darkred' }}>
+                {/* ITEMLIST {parentId ? 'Parent ' + parentId : 'Page ' + pageNo} */}
+                {/* If Children.Count = 0 and EditMode = true, draw a drop placeholder */}
+                {childItemIds.map((id, index) => <ReglineItem key={id} id={id} index={index} pageNo={pageNo} parentId={parentId} />)}
             </div>
         );
     }
@@ -32,7 +35,7 @@ export default class ReglineItemList extends React.Component<ReglineItemList.Pro
 
 function mapStateToProps(state: RootState, ownProps: ReglineItemList.Props): Partial<ReglineItemList.Props> {
     return {
-        items: state.pages[ownProps.pageNo].children // OR parentId?
+        childItemIds: ownProps.parentId != null ? state.reglineItems[ownProps.parentId].childIds : state.pages[ownProps.pageNo].children // OR parentId?
     };
 }
 

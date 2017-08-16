@@ -4,6 +4,9 @@ import * as style from './style.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
 import ReglineItemList from './ReglineItemList'
 
 export namespace App {
@@ -18,6 +21,7 @@ export namespace App {
 }
 
 // @connect(mapStateToProps, mapDispatchToProps)
+@DragDropContext(HTML5Backend)
 export class Sort extends React.Component<App.Props, App.State> {
 
     render() {

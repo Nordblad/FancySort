@@ -4,9 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
-export namespace ItemWrapper {
+export namespace Placeholder {
   export interface Props {
-    id: number
+    // id: number,
+    // index: number,
+    // parentId?: number,
+    // pageNo?: number,
+    // type: 'item' | 'group' | 'layout'
   }
 
   export interface State {
@@ -14,13 +18,12 @@ export namespace ItemWrapper {
   }
 }
 
-export default class ItemWrapper extends React.Component<ItemWrapper.Props, ItemWrapper.State> {
-
+export default class Placeholder extends React.Component<Placeholder.Props, Placeholder.State> {
   render() {
-    const { id } = this.props;
+    // const { id, children, type, pageNo, parentId, index } = this.props;
     return (
-      <div className="ItemWrapper" style={{ padding: 20, boxShadow: '0 0 0 1px darkslategray' }}>
-        ITEM: {id}
+      <div className="Placeholder" style={{ backgroundColor: '#F5F5F5', border: '1px dashed darkslategray' }}>
+        DROP STUFF HERE
       </div>
     );
   }

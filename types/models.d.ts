@@ -25,7 +25,7 @@ declare interface RootState {
 declare interface ReglineItemModel {
   id: number,
   type: string,
-  children: number[]
+  childIds: number[]
 }
 
 declare interface ReglineItemState {
