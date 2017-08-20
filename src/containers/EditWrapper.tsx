@@ -4,6 +4,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { DragSource, DropTarget } from 'react-dnd';
+import { selectItem, addMessage } from '../actions/editorUi'
+import { createSelector } from 'reselect'
+import * as classNames from 'classnames'
+
+export type EditWrapperType = 'item' | 'group' | 'layout' | 'none'
 
 export namespace EditWrapper {
   export interface Props {
@@ -11,13 +16,17 @@ export namespace EditWrapper {
     index: number,
     parentId?: number,
     pageNo?: number,
-    wrapperType: 'item' | 'group' | 'layout',
+    wrapperType: EditWrapperType,
 
     connectDropTarget?: (target: JSX.Element) => JSX.Element,
     connectDragSource?: (handle: JSX.Element) => JSX.Element,
     connectDragPreview?: (preview: JSX.Element) => JSX.Element,
     isDragging?: boolean,
-    isOver?: boolean
+    isOver?: boolean,
+
+    selectItem?: typeof selectItem,
+    isSelected?: boolean,
+    addMessage?: typeof addMessage
   }
 
   export interface State {
@@ -34,7 +43,7 @@ const itemDragSource = {
       originalPageNo: props.pageNo
     }
     console.log('Begindrag', dndData)
-    
+
     return dndData
   },
 
@@ -84,6 +93,7 @@ const itemDropTarget = {
   // }
 };
 
+@connect(mapStateToProps, mapDispatchToProps)
 @DropTarget('REGLINEITEM', itemDropTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver({ shallow: true })
@@ -94,25 +104,68 @@ const itemDropTarget = {
   isDragging: monitor.isDragging(),
 }))
 export default class EditWrapper extends React.Component<EditWrapper.Props, EditWrapper.State> {
+  handleClick = (e) => {
+    // console.log('Click on', this.props.id, e)
+    // e.preventDefault();
+    if (this.props.wrapperType === 'item') {
+      this.props.selectItem(this.props.id)
+      this.props.addMessage('success', 'Selected item ' + this.props.id)
+    }
+  }
   render() {
-    const { id, children, wrapperType, pageNo, parentId, index, connectDragPreview, connectDragSource, connectDropTarget, isDragging, isOver } = this.props;
+    const { id, children, wrapperType, pageNo, parentId, index,
+      connectDragPreview, connectDragSource, connectDropTarget,
+      isDragging, isOver, isSelected } = this.props;
+
+    const classes = classNames([
+      'reg-editwrapper',
+      'reg-editwrapper--' + wrapperType,
+      isSelected && 'reg-editwrapper--selected',
+      isOver && 'reg-editwrapper--isover'
+    ])
     return connectDragPreview(
-      <div className="EditWrapper" style={{ opacity: isDragging ? 0 : 1, backgroundColor: isOver ? 'red' : 'transparent' }}>
-        {connectDragSource(<div style={{ backgroundColor: '#333', color: 'white', padding: 4 }}>{wrapperType} - I {index} PNo [{pageNo}] PId [{parentId}]</div>)}
-        {connectDropTarget(<div>{children}</div>)}
-      </div>
-    )
+      connectDropTarget(
+        <div
+          className={classes}
+          style={{
+            opacity: isDragging ? 0 : 1,
+            backgroundColor: isOver ? 'red' : 'transparent'
+          }}
+          onClickCapture={this.handleClick}>
+          <div className="reg-editwrapper__outline"></div>
+          {wrapperType === 'item' ?
+            connectDragSource(
+              <div className="reg-editwrapper__content">
+                {children}
+              </div>) :
+            (<div className="reg-editwrapper__content">
+              {children}
+            </div>)}
+          {wrapperType !== 'item' && connectDragSource(
+            <div className="reg-editwrapper__handle"></div>
+          )}
+        </div>
+      ))
   }
 }
 
-// function mapStateToProps(state: RootState) {
-//   return {
-//     todos: state.todos
-//   };
-// }
+const getItemId = (state, props: EditWrapper.Props) => props.id
+const getSelectedItemIds = (state: RootState) => state.editorUi.selectedReglineItems
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     actions: bindActionCreators(TodoActions as any, dispatch)
-//   };
-// }
+const getIsSelected = createSelector(
+  [getItemId, getSelectedItemIds],
+  (id, selectedIds) => selectedIds.indexOf(id) > -1
+)
+
+function mapStateToProps(state: RootState, ownProps: EditWrapper.Props) {
+  return {
+    isSelected: getIsSelected(state, ownProps)
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    selectItem,
+    addMessage
+  }, dispatch)
+}

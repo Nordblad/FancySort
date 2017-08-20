@@ -1,5 +1,5 @@
 const initialTestData: PageState = [
-    { id: 0, children: [1, 2, 5] }
+    { id: 0, children: [1, 5] }
 ]
 
 const pages = (state: PageState = initialTestData, action) => {

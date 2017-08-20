@@ -1,0 +1,186 @@
+html, body {
+    height: 100%;
+}
+
+.regline-item {
+    padding: 10px;
+}
+
+.reg-editwrapper > .reg-editwrapper__handle {
+    display: none;
+}
+
+/* .reg-editwrapper:hover > .reg-editwrapper__handle, */
+.reg-editwrapper--selected > .reg-editwrapper__handle {
+    display: block;
+}
+
+
+.reg-editwrapper--item > .reg-editwrapper__handle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    background-color: rgb(113, 113, 113);
+    cursor: move;
+    border-radius: 3px;
+}
+
+.reg-editwrapper--group > .reg-editwrapper__handle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 12px;
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjYwMCIgaGVpZ2h0PSI0MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8IS0tIENyZWF0ZWQgd2l0aCBNZXRob2QgRHJhdyAtIGh0dHA6Ly9naXRodWIuY29tL2R1b3BpeGVsL01ldGhvZC1EcmF3LyAtLT4KIDxnPgogIDx0aXRsZT5iYWNrZ3JvdW5kPC90aXRsZT4KICA8cmVjdCBmaWxsPSJub25lIiBpZD0iY2FudmFzX2JhY2tncm91bmQiIGhlaWdodD0iNDAyIiB3aWR0aD0iNjAyIiB5PSItMSIgeD0iLTEiLz4KICA8ZyBkaXNwbGF5PSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgeT0iMCIgeD0iMCIgaGVpZ2h0PSIxMDAlIiB3aWR0aD0iMTAwJSIgaWQ9ImNhbnZhc0dyaWQiPgogICA8cmVjdCBmaWxsPSJ1cmwoI2dyaWRwYXR0ZXJuKSIgc3Ryb2tlLXdpZHRoPSIwIiB5PSIwIiB4PSIwIiBoZWlnaHQ9IjEwMCUiIHdpZHRoPSIxMDAlIi8+CiAgPC9nPgogPC9nPgogPGc+CiAgPHRpdGxlPkxheWVyIDE8L3RpdGxlPgogIDxyZWN0IHJ4PSIxMCIgaWQ9InN2Z18xIiBoZWlnaHQ9IjIwMCIgd2lkdGg9IjIwMCIgeT0iMCIgeD0iMCIgc3Ryb2tlLXdpZHRoPSIwIiBzdHJva2U9IiMwMDAiIGZpbGw9IiMyNjI2MjYiLz4KICA8cmVjdCByeD0iMTAiIGlkPSJzdmdfMiIgaGVpZ2h0PSIyMDAiIHdpZHRoPSIyMDAiIHk9IjAiIHg9IjQwMCIgc3Ryb2tlLXdpZHRoPSIwIiBzdHJva2U9IiMwMDAiIGZpbGw9IiMyNjI2MjYiLz4KIDwvZz4KPC9zdmc+);
+    /* background-color: rgb(113, 113, 113); */
+    background-size: 12px;
+    background-repeat: space;
+    cursor: move;
+    /* border-radius: 3px; */
+    opacity: 0.4;
+}
+
+.reg-editwrapper--group > .reg-editwrapper__handle:hover {
+    opacity: 1;
+    background-color: rgba(1, 1, 100, .2)
+}
+
+.reg-editwrapper {
+    position: relative;
+}
+
+/* Wrapper borders */
+
+.reg-editwrapper__outline {
+    position: absolute;
+    pointer-events: none; 
+    left: -0;
+    top: -0;
+    right: -0;
+    bottom: -0;
+}
+
+/* Item */
+
+.reg-editwrapper--item > .reg-editwrapper__outline {
+    margin: 0;
+    border-radius: 3px;
+    border: 1px solid transparent;
+}
+
+.reg-editwrapper--item:hover > .reg-editwrapper__outline {
+    border-color: #7fe0ff;
+}
+
+.reg-editwrapper--item.reg-editwrapper--selected > .reg-editwrapper__outline {
+    border-style: solid;
+    border-color: #7fe0ff;
+    /* box-shadow: 0 0 6px rgba(1, 1, 1, .1) */
+}
+
+/* Group */
+
+.reg-editwrapper--group > .reg-editwrapper__outline {
+    margin: -3px;
+    border-radius: 4px;
+    border: 1px dashed transparent;
+}
+
+.reg-editwrapper--group:hover > .reg-editwrapper__outline {
+    border-color: #2d2d2d;
+}
+
+.reg-editwrapper--group.reg-editwrapper--selected > .reg-editwrapper__outline {
+    border-style: solid;
+    border-color: #2d2d2d;
+    box-shadow: 0 0 6px rgba(1, 1, 1, .1)
+}
+
+/* Layout */
+
+.reg-editwrapper--layout > .reg-editwrapper__outline {
+    margin: -2px;
+    border-radius: 4px;
+    border: 1px dashed transparent;
+}
+
+.reg-editwrapper--layout:hover > .reg-editwrapper__outline {
+    border-color: #2d2d2d;
+}
+
+.reg-editwrapper--layout.reg-editwrapper--selected > .reg-editwrapper__outline {
+    border-style: solid;
+    border-color: #2d2d2d;
+    box-shadow: 0 0 6px rgba(1, 1, 1, .1)
+}
+
+/* DRAWER */
+.reg-drawer__toggle {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: -20px;
+    top: 0;
+    background-color: blue;
+}
+
+.reg-messagelist {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 9000;
+    pointer-events: none;
+}
+
+.reg-messagelist__container {
+    width: 300px;
+    margin: 0 auto
+}
+
+.reg-message {
+    background-color: white;
+    border: 1px solid lightgray;
+    padding: 10px;
+    box-shadow: 0 0 2px rgba(1, 1, 1, 0.4);
+    border-radius: 2px;
+    transform: translateY(0);
+    opacity: 1;
+    margin-top: 10px;
+    box-sizing: border-box;
+    display: flex;
+    pointer-events: all;
+    transition: all 150ms ease-out;
+}
+
+.reg-message.is-entering {
+    opacity: 0;
+    transform: translateY(5px);
+}
+.reg-message.is-success.is-entering {
+    background-color: #00c500;
+}
+
+.reg-message.is-leaving {
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: all 150ms ease-out;
+}
+
+.reg-message.is-success {
+    border-color: #00d400;
+}
+
+.reg-message.is-success .reg-message__icon {
+    color: #00c500;
+}
+
+.reg-message__text {
+    margin-left: 10px;
+}
+
+.reg-message__icon {
+    font-size: 20px;
+}

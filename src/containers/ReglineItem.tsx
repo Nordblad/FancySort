@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import ReglineItemList from './ReglineItemList'
-import EditWrapper from './EditWrapper'
+import EditWrapper, { EditWrapperType } from './EditWrapper'
 import Columns from './Columns'
 
 export namespace ReglineItem {
@@ -27,13 +27,22 @@ export interface ReglineItemTypeProps {
 
 const Field = (props: ReglineItemTypeProps) => {
     return (
-        <div>Field<input type="text" placeholder={'ID ' + props.item.id} /></div>
+        <div style={{ display: 'flex' }}>
+            <label style={{ flex: 1, padding: 10, textAlign: 'right' }}>
+                Field
+            </label>
+            <div style={{ flex: 1, padding: 10 }}>
+                <input
+                    style={{ display: 'block' }}
+                    type="text"
+                    placeholder={'ID ' + props.item.id} />
+            </div>
+        </div>
     )
 }
 
 const Group: React.StatelessComponent<ReglineItemTypeProps> = (props) => (
-    <div>
-        Group {props.item.id}
+    <div className="reg-itemgroup">
         <ReglineItemList childItemIds={props.item.childIds} parentId={props.item.id} />
     </div>
 )
@@ -51,8 +60,12 @@ const itemTypes = {
 export default class ReglineItem extends React.Component<ReglineItem.Props, ReglineItem.State> {
     getWrapper = (item: ReglineItemModel, children): JSX.Element => {
         // if EditMode
-        const { index, pageNo, parentId } = this.props
-        return <EditWrapper wrapperType={'item'} id={item.id} index={index} pageNo={pageNo} parentId={parentId}>{children}</EditWrapper>
+        const { index, pageNo, parentId } = this.props // och EditMode
+        let wrapperType: EditWrapperType = 'none'
+        if (item.type === 'Field') wrapperType = 'item'
+        else if (item.type === 'Group') wrapperType = 'group'
+        else if (item.type === 'Columns') wrapperType = 'layout'
+        return <EditWrapper wrapperType={wrapperType} id={item.id} index={index} pageNo={pageNo} parentId={parentId}>{children}</EditWrapper>
     }
 
     getItemComponent = (item: ReglineItemModel): JSX.Element => {
@@ -65,12 +78,8 @@ export default class ReglineItem extends React.Component<ReglineItem.Props, Regl
 
     render() {
         const { id, item } = this.props;
-        console.log('RENDERING ITEM WRAPPER' + id, item)
-        return (
-            <div className="ReglineItem" style={{ padding: 0, border: '1px solid lightgray' }}>
-                {this.getWrapper(item, this.getItemComponent(item))}
-            </div>
-        );
+        // console.log('RENDERING ITEM WRAPPER' + id, item)
+        return this.getWrapper(item, this.getItemComponent(item))
     }
 }
 

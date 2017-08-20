@@ -17,8 +17,24 @@ declare type TodoStoreState = TodoItemData[];
 declare interface RootState {
   todos: TodoStoreState,
   reglineItems: ReglineItemState,
-  pages: PageState
+  pages: PageState,
+  editorUi: EditorUiState
 }
+
+// === UI
+
+declare interface EditorUiState {
+  selectedReglineItems: number[],
+  messages: MessageModel[]
+}
+
+declare interface MessageModel {
+  id: number,
+  type: MessageType,
+  text: string
+}
+
+declare type MessageType = 'success' | 'error' | 'warning'
 
 // ===
 

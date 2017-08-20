@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import ReglineItem from './ReglineItem'
 
+// This should be a stupid component right?
+
 export namespace ReglineItemList {
     export interface Props {
         pageNo?: number,
@@ -17,17 +19,30 @@ export namespace ReglineItemList {
     }
 }
 
+const Spacer = (props) => (<div>SPACER</div>)
+
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ReglineItemList extends React.Component<ReglineItemList.Props, ReglineItemList.State> {
+
+    renderReglineItem = (id, index) => {
+        const { pageNo, parentId } = this.props
+        return (
+            {}
+        )
+    }
 
     render() {
         const { childItemIds, pageNo, parentId } = this.props;
         // Redan här måste itemType fås fram för wrapper-inställningar
         return (
-            <div className="ReglineItemList" style={{ padding: 0, boxShadow: '0 0 0 1px darkred' }}>
-                {/* ITEMLIST {parentId ? 'Parent ' + parentId : 'Page ' + pageNo} */}
-                {/* If Children.Count = 0 and EditMode = true, draw a drop placeholder */}
-                {childItemIds.map((id, index) => <ReglineItem key={id} id={id} index={index} pageNo={pageNo} parentId={parentId} />)}
+            <div className="ReglineItemList">
+                {childItemIds.map((id, index) => (
+                    <ReglineItem
+                        key={id}
+                        id={id}
+                        index={index}
+                        pageNo={pageNo}
+                        parentId={parentId} />))}
             </div>
         );
     }

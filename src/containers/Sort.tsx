@@ -8,6 +8,11 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import ReglineItemList from './ReglineItemList'
+import Drawer from './Drawer'
+import MessageList from './MessageList'
+
+// import DatePicker from 'antd/lib/date-picker';  // for js
+// import 'antd/lib/date-picker/style/css'; 
 
 export namespace App {
     export interface Props extends RouteComponentProps<void> {
@@ -27,11 +32,22 @@ export class Sort extends React.Component<App.Props, App.State> {
     render() {
         const { children } = this.props;
         return (
-            <div className="container">
-                <h1>Drag and drop</h1>
-                <div>
-                    <ReglineItemList pageNo={0} />
+            <div style={{ display: 'flex' }}>
+                <div style={{ flex: 1 }}>
+                    <MessageList />
+                    <div className="container" style={{ maxWidth: 600, backgroundColor: 'white', margin: '20px auto' }}>
+                        <h1>Drag and drop</h1>
+                        <div>
+                            <ReglineItemList pageNo={0} />
+                        </div>
+                    </div>
                 </div>
+                <Drawer width={300}>
+                    <div style={{ backgroundColor: '#333', height: 2000 }}>
+                        Drawer content
+                        <br />
+                    </div>
+                </Drawer>
             </div>
         );
     }
