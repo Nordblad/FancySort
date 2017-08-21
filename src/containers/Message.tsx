@@ -21,9 +21,9 @@ export default class Message extends React.Component<Message.Props, Message.Stat
     timer = null
 
     componentDidMount() {
-        console.log('Showing message')
-        let n = findDOMNode(this).clientHeight
-        console.log('HEIGHT:', n)
+        // console.log('Showing message')
+        // let n = findDOMNode(this).clientHeight
+        // console.log('HEIGHT:', n)
         setTimeout(() => {
             this.setState({ isEntering: false })
             this.timer = setTimeout(this.removeMessage, 2000)
@@ -31,12 +31,12 @@ export default class Message extends React.Component<Message.Props, Message.Stat
     }
 
     componentWillUnmount() {
-        console.log('MESSAGE UNMOUNT!')
+        // console.log('MESSAGE UNMOUNT!')
         clearTimeout(this.timer)
     }
 
     removeMessage = () => {
-        console.log('Hiding message')
+        // console.log('Hiding message')
         this.setState({ isLeaving: true })
         this.timer = setTimeout(() => {
             this.props.onDelete(this.props.id)

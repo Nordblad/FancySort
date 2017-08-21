@@ -19,7 +19,7 @@ export namespace ReglineItemList {
     }
 }
 
-const Spacer = (props) => (<div>SPACER</div>)
+const Spacer = (props) => (<div></div>)
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ReglineItemList extends React.Component<ReglineItemList.Props, ReglineItemList.State> {
@@ -36,13 +36,15 @@ export default class ReglineItemList extends React.Component<ReglineItemList.Pro
         // Redan här måste itemType fås fram för wrapper-inställningar
         return (
             <div className="ReglineItemList">
+                <Spacer />
                 {childItemIds.map((id, index) => (
-                    <ReglineItem
+                    [<ReglineItem
                         key={id}
                         id={id}
                         index={index}
                         pageNo={pageNo}
-                        parentId={parentId} />))}
+                        parentId={parentId} />,
+                        <Spacer />]))}
             </div>
         );
     }

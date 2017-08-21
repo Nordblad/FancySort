@@ -17,13 +17,13 @@ const initialTestData: ReglineItemState = {
 
     5: { id: 5, type: 'Group', childIds: [6, 8, 9] }, // TblPerson group
 
-    6: { id: 6, type: 'Columns', childIds: [10, 11, 12] },
+    6: { id: 6, type: 'Columns', childIds: [10, 11] },
     10: { id: 10, type: 'Field', childIds: [] },
     11: { id: 11, type: 'Field', childIds: [] },
 
     8: { id: 8, type: 'Field', childIds: [] },
     9: { id: 9, type: 'Field', childIds: [] },
-    12: { id: 12, type: 'Field', childIds: [] },
+    // 12: { id: 12, type: 'Field', childIds: [] },
 }
 
 const reglineItems = (state: ReglineItemState = initialTestData, action) => {

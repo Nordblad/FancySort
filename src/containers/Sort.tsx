@@ -10,12 +10,14 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import ReglineItemList from './ReglineItemList'
 import Drawer from './Drawer'
 import MessageList from './MessageList'
+import { validatePage } from '../actions/pages'
 
 // import DatePicker from 'antd/lib/date-picker';  // for js
 // import 'antd/lib/date-picker/style/css'; 
 
 export namespace App {
     export interface Props extends RouteComponentProps<void> {
+        validatePage: typeof validatePage
         // todos: TodoItemData[];
         // actions: typeof TodoActions;
     }
@@ -25,10 +27,13 @@ export namespace App {
     }
 }
 
-// @connect(mapStateToProps, mapDispatchToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 @DragDropContext(HTML5Backend)
 export class Sort extends React.Component<App.Props, App.State> {
-
+    handleOnSubmit = () => {
+        console.log('Submit')
+        this.props.validatePage(0)
+    }
     render() {
         const { children } = this.props;
         return (
@@ -40,6 +45,7 @@ export class Sort extends React.Component<App.Props, App.State> {
                         <div>
                             <ReglineItemList pageNo={0} />
                         </div>
+                        <button onClick={this.handleOnSubmit}>Submit</button>
                     </div>
                 </div>
                 <Drawer width={300}>
@@ -53,14 +59,14 @@ export class Sort extends React.Component<App.Props, App.State> {
     }
 }
 
-// function mapStateToProps(state: RootState) {
-//   return {
-//     todos: state.todos
-//   };
-// }
+function mapStateToProps(state: RootState) {
+    return {
+        // todos: state.todos
+    };
+}
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     actions: bindActionCreators(TodoActions as any, dispatch)
-//   };
-// }
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        validatePage
+    }, dispatch)
+}
