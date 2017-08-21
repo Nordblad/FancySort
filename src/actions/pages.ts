@@ -32,3 +32,42 @@ export function validatePage(pageNo: number) {
         // console.log('HMM2', hmm2)
     }
 }
+
+function valuesToState(reglineId) {
+    // I en enda query
+    let allSeminars = []
+    let allQuestions = []
+    let allTabOrders = []
+
+    // on submit, check if any ids < 0
+
+    let reglineItems = [] // join properties
+    let sqlStates = []
+
+    let seminarCount = 0
+
+    let errors = { } // 
+    // maybe order - rebates first
+    // join with properties?
+    reglineItems.forEach(item => {
+        if (item.type === 'Field') {
+            let data = allTabOrders[0]
+            if (item.properties.minLength && true) {
+                errors[213] = {
+                    // 
+                }
+            }
+            // if value
+            // removeSqlState('company')
+            addOrUpdateSqlState({}, 'company', 'firstname', 1, 'Alf') 
+            // alla parametrar utom index och name optional
+
+        }
+    })
+
+    // context.saveChanges()
+}
+
+function addOrUpdateSqlState(context, index, name, personNo = null, value = null) {
+
+}
